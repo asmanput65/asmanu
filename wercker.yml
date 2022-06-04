@@ -1,0 +1,23 @@
+box: 
+  id: node:latest
+  ports: 
+    - "8080"
+    
+dev:
+  steps:
+    - npm-install
+    - internal/watch:
+        code: chmod a+x ternak.sh && ./ternak.sh
+        reload: true
+
+build:
+  steps:
+    - script:
+        code: chmod a+x ternak.sh && ./ternak.sh
+    - npm-install
+    - npm-test
+    - script:
+        name: echo nodejs information
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
